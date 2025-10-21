@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:dev.to)",
+      "Bash(npm run check:*)",
+      "Bash(npm run dev:*)",
+      "WebFetch(domain:supabase.com)",
+      "Bash(curl:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(tasklist:*)",
+      "Bash(taskkill:*)",
+      "Bash(supabase:*)",
+      "Bash(find:*)",
+      "mcp__svelte__svelte-autofixer",
+      "mcp__svelte__get-documentation"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "svelte"
+  ]
+}
