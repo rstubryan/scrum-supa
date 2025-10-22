@@ -18,7 +18,8 @@
       "WebFetch(domain:shadcn-svelte.com)",
       "Bash(npx shadcn-svelte@latest init:*)",
       "Bash(npm install:*)",
-      "Bash(npx shadcn-svelte@latest add:*)"
+      "Bash(npx shadcn-svelte@latest add:*)",
+      "Bash(npm run build:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
