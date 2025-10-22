@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import AuthButton from '$lib/components/auth/auth-button.svelte';
+	import AuthButton from '@/components/molecules/auth-button.svelte';
 	import { onMount } from 'svelte';
 	import { Toaster } from '$lib/components/ui/sonner/index.js';
 

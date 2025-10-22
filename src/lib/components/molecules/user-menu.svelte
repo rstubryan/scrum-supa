@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { getDiscordUserInfo } from '$lib/utils/discord';
-	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import { getDiscordUserInfo } from '@/utils/discord';
+	import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+	import { Button } from '@/components/ui/button';
+	import * as DropdownMenu from '@/components/ui/dropdown-menu';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 

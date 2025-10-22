@@ -1,6 +1,6 @@
 <script lang="ts">
 	import UserMenu from './user-menu.svelte';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '@/components/ui/button';
 
 	let { user } = $props();
 </script>
