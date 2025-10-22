@@ -1,10 +1,17 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ url }) => {
-	const redirect = url.searchParams.get('redirect') || '/';
+export const load: PageServerLoad = async ({ url, locals: { safeGetSession } }) => {
+	const { user, session } = await safeGetSession();
+
+	// If user is already authenticated, redirect to dashboard
+	if (session?.user) {
+		throw redirect(303, '/dashboard');
+	}
+
+	const redirectTo = url.searchParams.get('redirect') || '/';
 	const error = url.searchParams.get('error');
-	return { redirect, error };
+	return { redirect: redirectTo, error };
 };
 
 export const actions: Actions = {
@@ -14,7 +21,7 @@ export const actions: Actions = {
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: 'discord',
 			options: {
-				redirectTo: `${url.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
+				redirectTo: `${url.origin}/callback?next=${encodeURIComponent(redirectTo)}`
 			}
 		});
 

@@ -67,8 +67,7 @@
 								</Button>
 
 								<div class="text-sm text-gray-600">
-									Or <a href="/auth/logout" class="text-blue-600 hover:text-blue-500">sign out</a> to
-									exit
+									Or <a href="/logout" class="text-blue-600 hover:text-blue-500">sign out</a> to exit
 								</div>
 							</div>
 						</div>
