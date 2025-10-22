@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui';
+	import { Button } from '$lib/components/ui/button';
 	import { getDiscordUserInfo } from '$lib/utils/discord';
 	import { page } from '$app/state';
 
@@ -64,23 +64,21 @@
 						{/if}
 					</div>
 					<div class="space-x-4">
-						<a href="/dashboard">
-							<Button>Go to Dashboard</Button>
-						</a>
-						<a href="/auth/logout">
-							<Button class="border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-								>Sign Out</Button
-							>
-						</a>
+	<a href="/dashboard">
+		<Button>Go to Dashboard</Button>
+	</a>
+	<a href="/auth/logout">
+		<Button variant="outline">Sign Out</Button>
+	</a>
 					</div>
 				</div>
 			{:else}
-				<div class="mt-8">
-					<a href="/auth/login">
-						<Button class="h-11 px-8">Get Started</Button>
-					</a>
-					<p class="mt-4 text-sm text-gray-600">Sign in with Discord to continue</p>
-				</div>
+			<div class="mt-8">
+				<a href="/auth/login">
+					<Button size="lg">Get Started</Button>
+				</a>
+				<p class="mt-4 text-sm text-gray-600">Sign in with Discord to continue</p>
+			</div>
 			{/if}
 		</div>
 

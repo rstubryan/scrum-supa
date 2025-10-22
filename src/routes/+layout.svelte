@@ -32,7 +32,7 @@
 				{/if}
 			</div>
 			<div class="flex items-center">
-				<AuthButton user={data.user} session={data.session} />
+				<AuthButton user={data.user} />
 			</div>
 		</div>
 	</div>

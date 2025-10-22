@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui';
+	import { Button } from '$lib/components/ui/button';
 	import { getDiscordUserInfo } from '$lib/utils/discord';
 
 	let { data } = $props();
@@ -36,7 +36,7 @@
 							</div>
 							{#if discordInfo?.displayName !== discordInfo?.mention}
 								<p class="mt-1 text-sm text-gray-500">
-									{discordInfo.displayName}
+									{discordInfo?.displayName}
 								</p>
 							{/if}
 						{:else}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Button } from '$lib/components/ui';
+	import { Button } from '$lib/components/ui/button';
 
 	let { form, data } = $props();
 </script>
@@ -34,7 +34,9 @@
 				<form method="POST" action="?/discord" use:enhance>
 					<Button
 						type="submit"
-						class="w-full border border-gray-300 bg-indigo-600 text-white hover:bg-indigo-700"
+						variant="default"
+						size="lg"
+						class="w-full bg-indigo-600 hover:bg-indigo-700"
 					>
 						<svg class="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
 							<path
