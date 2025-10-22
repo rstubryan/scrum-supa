@@ -1,8 +1,9 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import AuthButton from '$lib/components/auth/AuthButton.svelte';
+	import AuthButton from '$lib/components/auth/auth-button.svelte';
 	import { onMount } from 'svelte';
+	import { Toaster } from '$lib/components/ui/sonner/index.js';
 
 	let { children, data } = $props();
 
@@ -34,5 +35,6 @@
 </nav>
 
 <main>
+	<Toaster />
 	{@render children?.()}
 </main>
