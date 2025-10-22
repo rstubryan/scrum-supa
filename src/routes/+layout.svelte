@@ -25,11 +25,6 @@
 		<div class="flex h-16 justify-between">
 			<div class="flex items-center">
 				<a href="/" class="text-xl font-bold text-gray-900"> ScrumSupa </a>
-				{#if data.user}
-					<div class="ml-6 flex items-center space-x-4">
-						<a href="/debug/discord" class="text-sm text-gray-600 hover:text-gray-900"> Debug </a>
-					</div>
-				{/if}
 			</div>
 			<div class="flex items-center">
 				<AuthButton user={data.user} />

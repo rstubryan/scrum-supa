@@ -6,12 +6,13 @@ export const load = (async ({ url, locals: { safeGetSession } }) => {
 
 	const protectedRoutes = ['/dashboard', '/debug'];
 	const discordOnlyRoutes = ['/dashboard'];
+	const authRoutes = ['/login', '/register'];
 
 	const currentPath = url.pathname;
 
 	if (!session?.user) {
 		if (protectedRoutes.some((route) => currentPath.startsWith(route))) {
-			throw redirect(303, `/auth/login?redirect=${encodeURIComponent(currentPath)}`);
+			throw redirect(303, `/login?redirect=${encodeURIComponent(currentPath)}`);
 		}
 	} else {
 		const discordInfo = session.user.user_metadata;
@@ -22,7 +23,8 @@ export const load = (async ({ url, locals: { safeGetSession } }) => {
 			throw redirect(303, '/?error=discord_required');
 		}
 
-		if (currentPath.startsWith('/auth/login')) {
+		// Redirect authenticated users away from auth routes
+		if (authRoutes.some((route) => currentPath.startsWith(route))) {
 			throw redirect(303, '/dashboard');
 		}
 	}
