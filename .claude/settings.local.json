@@ -14,7 +14,11 @@
       "Bash(supabase:*)",
       "Bash(find:*)",
       "mcp__svelte__svelte-autofixer",
-      "mcp__svelte__get-documentation"
+      "mcp__svelte__get-documentation",
+      "WebFetch(domain:shadcn-svelte.com)",
+      "Bash(npx shadcn-svelte@latest init:*)",
+      "Bash(npm install:*)",
+      "Bash(npx shadcn-svelte@latest add:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
