@@ -12,8 +12,5 @@
 		<a href="/login">
 			<Button variant="outline">Sign in</Button>
 		</a>
-		<a href="/login">
-			<Button>Get started</Button>
-		</a>
 	</div>
 {/if}

@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { getDiscordUserInfo } from '$lib/utils/discord';
+	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
+	import { Button } from '$lib/components/ui/button/index.js';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 
 	let { user } = $props();
-
-	let isOpen = $state(false);
 
 	const discordInfo = getDiscordUserInfo(user);
 	const isDiscordUser = discordInfo.providerId !== null;
@@ -11,71 +14,42 @@
 	const userInitials = displayText?.charAt(0).toUpperCase() || 'U';
 </script>
 
-<div class="relative">
-	<button
-		onclick={() => (isOpen = !isOpen)}
-		class="flex items-center space-x-3 rounded-full p-2 text-sm hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-	>
-		{#if discordInfo.avatar && isDiscordUser}
-			<img src={discordInfo.avatar} alt={displayText} class="h-8 w-8 rounded-full object-cover" />
-		{:else}
-			<div
-				class="h-8 w-8 rounded-full {isDiscordUser
-					? 'bg-indigo-600'
-					: 'bg-blue-600'} flex items-center justify-center font-medium text-white"
-			>
-				{userInitials}
-			</div>
-		{/if}
-		<span class="hidden text-gray-700 md:block">
-			{isDiscordUser ? discordInfo?.providerId : user?.email}
-		</span>
-		<svg class="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-		</svg>
-	</button>
+<DropdownMenu.Root>
+	<DropdownMenu.Trigger>
+		{#snippet child({ props })}
+			<Button {...props} variant="ghost" class="flex h-auto items-center space-x-1 p-2">
+				<Avatar class="h-8 w-8">
+					{#if discordInfo.avatar && isDiscordUser}
+						<AvatarImage src={discordInfo.avatar} alt={displayText} />
+					{/if}
+					<AvatarFallback class={isDiscordUser ? 'bg-indigo-600' : 'bg-blue-600'}>
+						{userInitials}
+					</AvatarFallback>
+				</Avatar>
+				<span class="hidden text-gray-700 md:block">
+					{displayText || user?.email}
+				</span>
+			</Button>
+		{/snippet}
+	</DropdownMenu.Trigger>
 
-	{#if isOpen}
-		<div
-			class="ring-opacity-5 absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black focus:outline-none"
+	<DropdownMenu.Content class="w-64" align="end">
+		<DropdownMenu.Label class="font-normal">
+			<div class="flex flex-col space-y-2">
+				<p class="text-sm leading-none font-medium">
+					{displayText || 'User'}
+				</p>
+				<p class="text-xs leading-none text-muted-foreground">
+					{discordInfo?.providerId}
+				</p>
+				{#if isDiscordUser && discordInfo.displayName !== discordInfo.mention}
+					<p class="text-xs leading-none text-muted-foreground">Discord User</p>
+				{/if}
+			</div>
+		</DropdownMenu.Label>
+		<DropdownMenu.Separator />
+		<DropdownMenu.Item class="hover: cursor-pointer" onclick={() => goto(resolve('/logout'))}
+			>Sign out</DropdownMenu.Item
 		>
-			<div class="py-1">
-				<div class="border-b border-gray-100 px-4 py-3 text-sm">
-					<div class="font-medium text-gray-900">
-						{isDiscordUser ? 'Discord User' : 'Email User'}
-					</div>
-					<div class="mt-1 truncate font-semibold text-gray-900">
-						{isDiscordUser ? discordInfo?.providerId : user?.email}
-					</div>
-					{#if isDiscordUser && discordInfo.displayName !== discordInfo.mention}
-						<div class="mt-1 truncate text-xs text-gray-500">
-							{discordInfo.displayName}
-						</div>
-					{/if}
-					{#if !isDiscordUser}
-						<div class="mt-1 text-xs text-gray-500">
-							{user?.email}
-						</div>
-					{/if}
-				</div>
-				<a
-					href="/logout"
-					class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-				>
-					Sign out
-				</a>
-			</div>
-		</div>
-	{/if}
-
-	{#if isOpen}
-		<div
-			class="fixed inset-0 z-40"
-			onclick={() => (isOpen = false)}
-			onkeydown={(e) => e.key === 'Escape' && (isOpen = false)}
-			role="button"
-			tabindex="0"
-			aria-label="Close menu"
-		></div>
-	{/if}
-</div>
+	</DropdownMenu.Content>
+</DropdownMenu.Root>
