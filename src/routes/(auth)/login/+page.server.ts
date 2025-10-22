@@ -2,9 +2,8 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url, locals: { safeGetSession } }) => {
-	const { user, session } = await safeGetSession();
+	const { session } = await safeGetSession();
 
-	// If user is already authenticated, redirect to dashboard
 	if (session?.user) {
 		throw redirect(303, '/dashboard');
 	}
