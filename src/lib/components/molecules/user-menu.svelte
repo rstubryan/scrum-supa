@@ -1,17 +1,30 @@
 <script lang="ts">
-	import { getDiscordUserInfo } from '@/utils/discord';
+	import * as DropdownMenu from '@/components/ui/dropdown-menu';
+	import { getDiscordUserInfo, type DiscordUserInfo } from '@/utils/discord';
 	import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 	import { Button } from '@/components/ui/button';
-	import * as DropdownMenu from '@/components/ui/dropdown-menu';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { onMount } from 'svelte';
 
 	let { user } = $props();
 
-	const discordInfo = getDiscordUserInfo(user);
-	const isDiscordUser = discordInfo.providerId !== null;
-	const displayText = discordInfo.displayName;
-	const userInitials = displayText?.charAt(0).toUpperCase() || 'U';
+	let discordInfo = $state<DiscordUserInfo | null>(null);
+	let isDiscordUser = $state(false);
+	let displayText = $state('');
+	let userInitials = $state('U');
+
+	if (user) {
+		displayText = user.email || 'User';
+		userInitials = displayText.charAt(0).toUpperCase();
+	}
+
+	onMount(() => {
+		discordInfo = getDiscordUserInfo(user);
+		isDiscordUser = discordInfo.providerId !== null;
+		displayText = discordInfo.displayName;
+		userInitials = displayText?.charAt(0).toUpperCase() || 'U';
+	});
 </script>
 
 <DropdownMenu.Root>
@@ -19,7 +32,7 @@
 		{#snippet child({ props })}
 			<Button {...props} variant="ghost" class="flex h-auto items-center space-x-1 p-2">
 				<Avatar class="h-8 w-8">
-					{#if discordInfo.avatar && isDiscordUser}
+					{#if discordInfo?.avatar && isDiscordUser}
 						<AvatarImage src={discordInfo.avatar} alt={displayText} />
 					{/if}
 					<AvatarFallback class={isDiscordUser ? 'bg-indigo-600' : 'bg-blue-600'}>
@@ -40,9 +53,9 @@
 					{displayText || 'User'}
 				</p>
 				<p class="text-xs leading-none text-muted-foreground">
-					{discordInfo?.providerId}
+					{discordInfo?.providerId || ''}
 				</p>
-				{#if isDiscordUser && discordInfo.displayName !== discordInfo.mention}
+				{#if isDiscordUser && discordInfo?.displayName !== discordInfo?.mention}
 					<p class="text-xs leading-none text-muted-foreground">Discord User</p>
 				{/if}
 			</div>

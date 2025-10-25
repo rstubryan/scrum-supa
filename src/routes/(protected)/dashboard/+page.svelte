@@ -1,11 +1,29 @@
 <script lang="ts">
 	import { Button } from '@/components/ui/button';
-	import { getDiscordUserInfo } from '@/utils/discord';
+	import { getDiscordUserInfo, type DiscordUserInfo } from '@/utils/discord';
+	import { onMount } from 'svelte';
 
 	let { data } = $props();
 
-	const discordInfo = data.user ? getDiscordUserInfo(data.user) : null;
-	const isDiscordUser = discordInfo?.providerId !== null;
+	let discordInfo = $state<DiscordUserInfo | null>(null);
+	let isDiscordUser = $state(false);
+
+	if (data.user) {
+		discordInfo = {
+			displayName: data.user.email || 'User',
+			mention: data.user.email || 'User',
+			avatar: null,
+			providerId: null
+		};
+		isDiscordUser = false;
+	}
+
+	onMount(() => {
+		if (data.user) {
+			discordInfo = getDiscordUserInfo(data.user);
+			isDiscordUser = discordInfo?.providerId !== null;
+		}
+	});
 </script>
 
 <div class="min-h-screen bg-gray-50">
